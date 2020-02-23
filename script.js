@@ -11,7 +11,7 @@ document.getElementById("joke-btn").addEventListener("click", function(event) {
             return response.json();
         }).then(async function(json) {
             await typeWriter(json[0].setup, "setup")
-            await sleep(2500)
+            await sleep(2000)
             await typeWriter(json[0].punchline, "punchline")
             document.getElementById("joke-btn").disabled = false;
         });
