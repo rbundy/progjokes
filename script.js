@@ -1,3 +1,10 @@
+const FALLBACK_JOKE = [
+    {
+        "setup": "Why did the chicken cross the road?",
+        "punchline": "To get to the other side"
+    }
+]
+
 document.getElementById("joke-btn").addEventListener("click", function(event) {
     document.getElementById("joke-btn").disabled = true;
     event.preventDefault();
@@ -6,10 +13,16 @@ document.getElementById("joke-btn").addEventListener("click", function(event) {
     document.getElementById("punchline").innerHTML = ""
 
     const url = "https://official-joke-api.appspot.com/jokes/programming/random"
-    fetch(url)
+    fetch(url, { mode: "no-cors" })
         .then(function(response) {
             return response.json();
         }).then(async function(json) {
+            await typeWriter(json[0].setup, "setup")
+            await sleep(2000)
+            await typeWriter(json[0].punchline, "punchline")
+            document.getElementById("joke-btn").disabled = false;
+        }).catch(async function() {
+            json = FALLBACK_JOKE
             await typeWriter(json[0].setup, "setup")
             await sleep(2000)
             await typeWriter(json[0].punchline, "punchline")
